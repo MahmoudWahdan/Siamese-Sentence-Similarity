@@ -10,14 +10,13 @@ from keras import Input
 from keras.models import Model, model_from_json
 from keras.optimizers import Adadelta
 from keras.callbacks import EarlyStopping
-from keras.utils import plot_model
 import keras.backend as K
 import matplotlib.pyplot as plt
 from metrics import pearson_correlation
 
 class SiameseModel:
     
-    def __init__(self, use_cudnn_lstm=True):
+    def __init__(self, use_cudnn_lstm=True, plot_model_architecture=False):
         n_hidden = 50
         input_dim = 300
         
@@ -57,8 +56,10 @@ class SiameseModel:
         
         self.__compile()
         print(self.model.summary())
-        # plot graph
-        plot_model(self.model, to_file='siamese_architecture.png')
+        
+        if plot_model_architecture:
+            from keras.utils import plot_model
+            plot_model(self.model, to_file='siamese_architecture.png')
         
     def __compile(self):
         optimizer = Adadelta() # gradient clipping is not there in Adadelta implementation in keras
