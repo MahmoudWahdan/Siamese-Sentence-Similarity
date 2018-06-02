@@ -17,18 +17,23 @@ from metrics import pearson_correlation
 
 class SiameseModel:
     
-    def __init__(self):
+    def __init__(self, use_cudnn_lstm=True):
         n_hidden = 50
         input_dim = 300
         
-        # Use CuDNNLSTM instead of LSTM, because it is faster
         # unit_forget_bias: Boolean. If True, add 1 to the bias of the forget gate at initialization. Setting it to true will also force  bias_initializer="zeros". This is recommended in Jozefowicz et al.
         # he_normal: Gaussian initialization scaled by fan_in (He et al., 2014)
-        lstm = layers.CuDNNLSTM(n_hidden, unit_forget_bias=True, 
-                                kernel_initializer='he_normal', 
-                                kernel_regularizer='l2',
-                                name='lstm_layer')
-#        lstm = layers.LSTM(n_hidden, unit_forget_bias=True, kernel_initializer='he_normal')
+        if use_cudnn_lstm:
+            # Use CuDNNLSTM instead of LSTM, because it is faster
+            lstm = layers.CuDNNLSTM(n_hidden, unit_forget_bias=True, 
+                                    kernel_initializer='he_normal', 
+                                    kernel_regularizer='l2',
+                                    name='lstm_layer')
+        else:
+            lstm = layers.LSTM(n_hidden, unit_forget_bias=True, 
+                               kernel_initializer='he_normal',
+                               kernel_regularizer='l2',
+                               name='lstm_layer')
         
         # Building the left branch of the model: inputs are variable-length sequences of vectors of size 128.
         left_input = Input(shape=(None, input_dim), name='input_1')
