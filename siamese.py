@@ -46,9 +46,8 @@ class SiameseModel:
         
         # Builds the classifier on top
         l1_norm = lambda x: 1 - K.abs(x[0] - x[1])
-        merged = layers.merge([left_output, right_output], mode = l1_norm, 
-                              output_shape = lambda x: x[0],
-                              name='L1_distance')
+        merged = layers.Lambda(function=l1_norm, output_shape=lambda x: x[0], 
+                               name='L1_distance')([left_output, right_output])
         predictions = layers.Dense(1, activation='sigmoid', name='Similarity_layer')(merged)
         
         # Instantiating and training the model: when you train such a model, the weights of the LSTM layer are updated based on both inputs.
