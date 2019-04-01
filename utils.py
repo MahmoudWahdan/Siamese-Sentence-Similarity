@@ -6,6 +6,7 @@ Created on Sat May  5 00:04:37 2018
 """
 
 import json
+import argparse
 from keras.preprocessing.sequence import pad_sequences
 
 def read_data(file_path):
@@ -25,6 +26,15 @@ def write_data(file_path, samples):
 
 def pad_tensor(tensor, max_len, dtype='float32'):
     return pad_sequences(tensor, padding='post', dtype=dtype, maxlen=max_len)
+
+
+def str2bool(v):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
 if __name__ == '__main__':

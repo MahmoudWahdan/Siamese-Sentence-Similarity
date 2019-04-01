@@ -14,7 +14,7 @@ from word_embeddings import WordEmbeddings
 from tokenizer import Tokenizer
 from vectorizer import Vectorizer
 from data_reader import read_SICK_data
-from utils import pad_tensor
+from utils import pad_tensor, str2bool
 from siamese import SiameseModel
 
 
@@ -25,6 +25,7 @@ parser.add_argument('--data', '-d', help = 'Path to SICK data used for training.
 parser.add_argument('--pretrained', '-p', help = 'Path to pre-trained weights.', type = str, required = False)
 parser.add_argument('--epochs', '-e', help = 'Number of epochs.', type = int, default = 100, required = False)
 parser.add_argument('--save', '-s', help = 'Folder path to save both the trained model and its weights.', type = str, required = False)
+parser.add_argument('--cudnnlstm', '-c', help = 'Use CUDNN LSTM for fast training. This requires GPU and CUDA.', type = str2bool, default='true', required = False)
 #print(parser.format_help())
 
 args = parser.parse_args()
@@ -33,6 +34,9 @@ train_df, dev_df, test_df = read_SICK_data(args.data)
 pretrained = args.pretrained
 epochs = args.epochs
 save_path = args.save
+use_cudnn_lstm = args.cudnnlstm
+
+print('use_cudnn_lstm: ', use_cudnn_lstm)
 
 # initialize objects
 print('Initializing objects ...')
@@ -75,7 +79,7 @@ dev_b_vectors = pad_tensor(dev_b_vectors, max_len)
 
 
 print('Training the model ...')
-siamese = SiameseModel()
+siamese = SiameseModel(use_cudnn_lstm)
 if pretrained is not None:
     siamese.load_pretrained_weights(model_wieghts_path=pretrained)
 validation_data = ([dev_a_vectors, dev_b_vectors], dev_gold)
