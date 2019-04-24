@@ -31,7 +31,10 @@ class Vectorizer:
         a_vectors = [self.vectorize_sentence(sentence) for sentence in df['sentence_A']]
         b_vectors = [self.vectorize_sentence(sentence) for sentence in df['sentence_B']]
         gold = df['relatedness_score'].tolist()
-        return a_vectors, b_vectors, gold
+        ids = 0 * [len(gold)]
+        if 'pair_ID' in df.columns:
+            ids = df['pair_ID']
+        return ids, a_vectors, b_vectors, gold
     
     def __valid_token(self, token):
         if token in string.punctuation:

@@ -52,7 +52,7 @@ vectorizer = Vectorizer(word_embeddings, tokenizer)
 
 #### training dataset ####
 # vectorizing
-train_a_vectors, train_b_vectors, train_gold = vectorizer.vectorize_df(train_df)
+ids, train_a_vectors, train_b_vectors, train_gold = vectorizer.vectorize_df(train_df)
 train_max_a_length = len(max(train_a_vectors, key=len))
 train_max_b_length = len(max(train_b_vectors, key=len))
 print('maximum number of tokens per sentence A in training set is %d' % train_max_a_length)
@@ -66,7 +66,7 @@ train_b_vectors = pad_tensor(train_b_vectors, max_len)
 
 #### development dataset ####
 # vectorizing
-dev_a_vectors, dev_b_vectors, dev_gold = vectorizer.vectorize_df(dev_df)
+ids, dev_a_vectors, dev_b_vectors, dev_gold = vectorizer.vectorize_df(dev_df)
 dev_max_a_length = len(max(dev_a_vectors, key=len))
 dev_max_b_length = len(max(dev_b_vectors, key=len))
 print('maximum number of tokens per sentence A in dev set is %d' % dev_max_a_length)
@@ -92,7 +92,7 @@ if save_path is not None:
 
 #### testing dataset ####
 print('Vectorizing testing dataset ...')
-test_a_vectors, test_b_vectors, test_gold = vectorizer.vectorize_df(test_df)
+ids, test_a_vectors, test_b_vectors, test_gold = vectorizer.vectorize_df(test_df)
 test_max_a_length = len(max(test_a_vectors, key=len))
 test_max_b_length = len(max(test_b_vectors, key=len))
 print('maximum number of tokens per sentence A in testing set is %d' % test_max_a_length)

@@ -42,7 +42,7 @@ vectorizer = Vectorizer(word_embeddings, tokenizer)
 
 #### training dataset ####
 # vectorizing
-train_a_vectors, train_b_vectors, train_gold = vectorizer.vectorize_df(df)
+ids, train_a_vectors, train_b_vectors, train_gold = vectorizer.vectorize_df(df)
 train_max_a_length = len(max(train_a_vectors, key=len))
 train_max_b_length = len(max(train_b_vectors, key=len))
 print('maximum number of tokens per sentence A in training set is %d' % train_max_a_length)

@@ -7,7 +7,8 @@ Created on Thu May 24 22:34:32 2018
 import pandas as pd
 
 def read_SICK_data(file_path, normalize_scores=True):
-    df = pd.read_csv(file_path, sep='\t')[['sentence_A', 'sentence_B', 'relatedness_score', 'SemEval_set']]
+    df = pd.read_csv(file_path, sep='\t')
+    df = df[['pair_ID', 'sentence_A', 'sentence_B', 'relatedness_score', 'SemEval_set']]
     # relatedness_score: semantic relatedness gold score (on a 1-5 continuous scale)
     # normalize score to range [0,1]
     if normalize_scores:
