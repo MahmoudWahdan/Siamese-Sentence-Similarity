@@ -27,6 +27,9 @@ class Vectorizer:
                     vector.append(token_vector)
         return vector
     
+    def vectorize_sentences(self, sentences, threshold=-1):
+        return [self.vectorize_sentence(s) for s in sentences]
+    
     def vectorize_df(self, df):
         a_vectors = [self.vectorize_sentence(sentence) for sentence in df['sentence_A']]
         b_vectors = [self.vectorize_sentence(sentence) for sentence in df['sentence_B']]

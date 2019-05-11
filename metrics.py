@@ -5,7 +5,7 @@ Created on Sat May 26 13:58:47 2018
 @author: mwahdan
 """
 
-import keras.backend as K
+import tensorflow.python.keras.backend as K
 
 def pearson_correlation(y_true, y_pred):
     # Pearson's correlation coefficient = covariance(X, Y) / (stdv(X) * stdv(Y))

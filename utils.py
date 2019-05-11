@@ -7,7 +7,7 @@ Created on Sat May  5 00:04:37 2018
 
 import json
 import argparse
-from keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 
 def read_data(file_path):
     samples = []
